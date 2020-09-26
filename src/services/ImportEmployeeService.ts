@@ -14,7 +14,6 @@ interface Request {
 }
 
 interface EmployeeTxt {
-  // id: number;
   created_at: Date;
   position: string;
   CPF: string;
@@ -26,7 +25,6 @@ interface EmployeeTxt {
 
 class ImportEmployeeServive {
   async execute({ csvFileName }: Request): Promise<Omit<Employee, 'id'>[]> {
-    console.log(csvFileName);
     const employeeRepository = getRepository(Employee);
     const employees: EmployeeTxt[] = [];
 
@@ -42,18 +40,13 @@ class ImportEmployeeServive {
     });
     const csv = stream.pipe(parser);
 
-    // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    console.log(
-      await employeeRepository.createQueryBuilder('employees').getCount(),
-    );
-
     csv.on('data', line => {
       const [created_at, position, CPF, name, UF, salary, status] = line;
 
       if (!position || !CPF || !name || !UF || !salary || !status)
         throw new AppError('All fields must be filled');
       employees.push({
-        created_at: convertStringToDate(created_at),
+        created_at: new Date(convertStringToDate(created_at)),
         position,
         CPF,
         name,

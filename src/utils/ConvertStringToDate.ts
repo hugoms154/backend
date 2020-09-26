@@ -1,7 +1,9 @@
-const convertStringToDate = (date: string): Date => {
+const convertStringToDate = (date: string): string => {
   const [day, month, year] = date.split('/');
-  const newDate = `${year}-${month}-${day}`;
-  return new Date(newDate);
+
+  const newDate = new Date(`${year}-${month}-${day}`).toISOString();
+
+  return newDate;
 };
 
 export default convertStringToDate;
