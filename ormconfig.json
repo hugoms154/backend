@@ -3,7 +3,7 @@
   "database": "./src/database/db.sqlite",
 
   "entities":[
-    "./src/models/*.ts"
+    "./src/entities/*.ts"
   ],
 
   "migrations": [
