@@ -3,7 +3,7 @@ import Employee from '../entities/Employee';
 import AppError from '../errors/AppError';
 
 export default class SearchEmployeeByCPFService {
-  async execute(CPF: string): Promise<Employee> {
+  async execute(CPF: string): Promise<Employee[]> {
     const employeeRepository = getRepository(Employee);
 
     if (!CPF) throw new AppError('Value must be required.', 400);
@@ -12,6 +12,6 @@ export default class SearchEmployeeByCPFService {
 
     if (!employee) throw new AppError('Employee not found.', 404);
 
-    return employee;
+    return [employee];
   }
 }
