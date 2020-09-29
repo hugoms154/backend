@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
 import multer from 'multer';
-import { getRepository } from 'typeorm';
+import { container } from 'tsyringe';
 import uploadConfig from '../config/upload';
 
 import {
+  ShowEmployeeService,
   CreateEmployeeService,
   ImportEmployeeService,
   SearchEmployeeByCPFService,
@@ -17,8 +18,6 @@ import {
   SearchEmployeeByUFService,
 } from '../services';
 
-import Employee from '../entities/Employee';
-
 const employeesRouter = Router();
 
 const upload = multer(uploadConfig);
@@ -27,7 +26,7 @@ employeesRouter.post(
   '/import',
   upload.single('file'),
   async (request, response) => {
-    const importEmployeeService = new ImportEmployeeService();
+    const importEmployeeService = container.resolve(ImportEmployeeService);
 
     const employees = await importEmployeeService.execute({
       csvFileName: request.file.filename,
@@ -39,7 +38,7 @@ employeesRouter.post(
 employeesRouter.post('/', async (request, response) => {
   const { name, CPF, position, salary, UF, status, created_at } = request.body;
 
-  const createEmployeeService = new CreateEmployeeService();
+  const createEmployeeService = container.resolve(CreateEmployeeService);
 
   const employee = await createEmployeeService.execute({
     name,
@@ -57,22 +56,24 @@ employeesRouter.post('/', async (request, response) => {
 employeesRouter.delete('/:CPF', async (request, response) => {
   const { CPF } = request.params;
 
-  const deleteEmployeeService = new DeleteEmployeeService();
+  const deleteEmployeeService = container.resolve(DeleteEmployeeService);
 
   await deleteEmployeeService.execute(CPF);
 
-  return response.status(201).send();
+  return response.status(204).send();
 });
 
 employeesRouter.get('/', async (request, response) => {
-  const employeeRepository = getRepository(Employee);
-  const employees = await employeeRepository.find();
+  const showEmployeeService = container.resolve(ShowEmployeeService);
+  const employees = await showEmployeeService.execute();
   return response.json(employees);
 });
 
 employeesRouter.get('/name', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByNameService = new SearchEmployeeByNameService();
+  const searchEmployeeByNameService = container.resolve(
+    SearchEmployeeByNameService,
+  );
 
   const employees = await searchEmployeeByNameService.execute(value as string);
 
@@ -81,7 +82,9 @@ employeesRouter.get('/name', async (request, response) => {
 
 employeesRouter.get('/position', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByPositionService = new SearchEmployeeByPositionService();
+  const searchEmployeeByPositionService = container.resolve(
+    SearchEmployeeByPositionService,
+  );
 
   const employees = await searchEmployeeByPositionService.execute(
     value as string,
@@ -92,7 +95,9 @@ employeesRouter.get('/position', async (request, response) => {
 
 employeesRouter.get('/uf', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByUFService = new SearchEmployeeByUFService();
+  const searchEmployeeByUFService = container.resolve(
+    SearchEmployeeByUFService,
+  );
 
   const { employees, total } = await searchEmployeeByUFService.execute(
     value as string,
@@ -103,7 +108,9 @@ employeesRouter.get('/uf', async (request, response) => {
 
 employeesRouter.get('/status', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByStatusService = new SearchEmployeeByStatusService();
+  const searchEmployeeByStatusService = container.resolve(
+    SearchEmployeeByStatusService,
+  );
 
   const employees = await searchEmployeeByStatusService.execute(
     value as string,
@@ -114,7 +121,9 @@ employeesRouter.get('/status', async (request, response) => {
 
 employeesRouter.get('/cpf', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByCPFService = new SearchEmployeeByCPFService();
+  const searchEmployeeByCPFService = container.resolve(
+    SearchEmployeeByCPFService,
+  );
 
   const employee = await searchEmployeeByCPFService.execute(value as string);
 
@@ -123,7 +132,9 @@ employeesRouter.get('/cpf', async (request, response) => {
 
 employeesRouter.get('/date', async (request, response) => {
   const { value } = request.query;
-  const searchEmployeeByCreationDateService = new SearchEmployeeByCreationDateService();
+  const searchEmployeeByCreationDateService = container.resolve(
+    SearchEmployeeByCreationDateService,
+  );
 
   const employees = await searchEmployeeByCreationDateService.execute(
     value as string,
@@ -137,7 +148,9 @@ employeesRouter.get('/salary', async (request, response) => {
   const minToNumber = Number(min);
   const maxToNumber = Number(max);
 
-  const searchEmployeeBySalaryService = new SearchEmployeeBySalaryService();
+  const searchEmployeeBySalaryService = container.resolve(
+    SearchEmployeeBySalaryService,
+  );
 
   const employees = await searchEmployeeBySalaryService.execute({
     min: minToNumber,

@@ -8,8 +8,10 @@ import SearchEmployeeByPositionService from './SearchEmployeeByPositionService';
 import SearchEmployeeBySalaryService from './SearchEmployeeBySalaryRangeService';
 import SearchEmployeeByUFService from './SearchEmployeeByUFService';
 import SearchEmployeeByStatusService from './SearchEmployeeByStatusService';
+import ShowEmployeeService from './ShowEmployeeService';
 
 export {
+  ShowEmployeeService,
   ImportEmployeeService,
   CreateEmployeeService,
   DeleteEmployeeService,

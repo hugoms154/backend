@@ -1,24 +1,26 @@
-import { Between, getRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
 import Employee from '../entities/Employee';
 import AppError from '../errors/AppError';
+import IEmployeeRepository from '../repositories/IEmployeeRepository';
 
 export interface IResquest {
   min: number;
   max: number;
 }
 
+@injectable()
 export default class SearchEmployeeByCPFService {
-  async execute({ min, max }: IResquest): Promise<Employee[]> {
-    const employeeRepository = getRepository(Employee);
+  constructor(
+    @inject('EmployeeRepository')
+    private employeeRepository: IEmployeeRepository,
+  ) {}
 
+  async execute({ min, max }: IResquest): Promise<Employee[]> {
     if (!max) throw new AppError('Max value must be required.', 400);
 
-    // min <=salary <= max
-    const employee = await employeeRepository.find({
-      where: { salary: Between(min, max) },
-    });
+    const employee = await this.employeeRepository.findBySalaryRange(min, max);
 
-    if (employee.length === 0) throw new AppError('Employee not found.', 404);
+    if (!employee) throw new AppError('Employee not found.', 404);
 
     return employee;
   }

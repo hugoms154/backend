@@ -4,17 +4,14 @@ import AppError from '../errors/AppError';
 import IEmployeeRepository from '../repositories/IEmployeeRepository';
 
 @injectable()
-export default class SearchEmployeeByCPFService {
+export default class ShowEmployeeService {
   constructor(
     @inject('EmployeeRepository')
     private employeeRepository: IEmployeeRepository,
   ) {}
 
-  async execute(name: string): Promise<Employee[] | Employee> {
-    if (!name) throw new AppError('Value must be required.', 400);
-
-    const employee = await this.employeeRepository.findByName(name);
-
+  async execute(): Promise<Employee[]> {
+    const employee = await this.employeeRepository.findAll();
     if (!employee) throw new AppError('Employee not found.', 404);
 
     return employee;

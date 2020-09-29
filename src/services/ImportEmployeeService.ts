@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
 import csvParse from 'csv-parse';
 import path from 'path';
 import fs from 'fs';
@@ -8,25 +8,22 @@ import convertStringToDate from '../utils/ConvertStringToDate';
 
 import Employee from '../entities/Employee';
 import AppError from '../errors/AppError';
+import IEmployeeRepository from '../repositories/IEmployeeRepository';
+import ICreateEmployeeDTO from './ICreateEmployeeDTO';
 
-interface Request {
+interface IRequest {
   csvFileName: string;
 }
 
-interface EmployeeTxt {
-  created_at: Date;
-  position: string;
-  CPF: string;
-  name: string;
-  UF: string;
-  salary: number;
-  status: string;
-}
-
+@injectable()
 class ImportEmployeeServive {
-  async execute({ csvFileName }: Request): Promise<Omit<Employee, 'id'>[]> {
-    const employeeRepository = getRepository(Employee);
-    const employees: EmployeeTxt[] = [];
+  constructor(
+    @inject('EmployeeRepository')
+    private employeeRepository: IEmployeeRepository,
+  ) {}
+
+  async execute({ csvFileName }: IRequest): Promise<ICreateEmployeeDTO[]> {
+    const employees: ICreateEmployeeDTO[] = [];
 
     const csvFile = path.join(uploadConfig.directory, csvFileName);
 
@@ -46,7 +43,7 @@ class ImportEmployeeServive {
       if (!position || !CPF || !name || !UF || !salary || !status)
         throw new AppError('All fields must be filled');
       employees.push({
-        created_at: new Date(convertStringToDate(created_at)),
+        created_at: convertStringToDate(created_at),
         position,
         CPF,
         name,
@@ -58,7 +55,11 @@ class ImportEmployeeServive {
 
     await new Promise(resolve => csv.on('end', resolve));
 
-    await employeeRepository.save(employees);
+    // await this.employeeRepository.save(employees);
+
+    await Promise.all(
+      employees.map(employee => this.employeeRepository.create(employee)),
+    );
 
     await fs.promises.unlink(csvFile);
 
