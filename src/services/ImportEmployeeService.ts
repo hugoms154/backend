@@ -6,8 +6,6 @@ import uploadConfig from '../config/upload';
 
 import convertStringToDate from '../utils/ConvertStringToDate';
 
-import Employee from '../entities/Employee';
-import AppError from '../errors/AppError';
 import IEmployeeRepository from '../repositories/IEmployeeRepository';
 import ICreateEmployeeDTO from './ICreateEmployeeDTO';
 
@@ -40,8 +38,8 @@ class ImportEmployeeServive {
     csv.on('data', line => {
       const [created_at, position, CPF, name, UF, salary, status] = line;
 
-      if (!position || !CPF || !name || !UF || !salary || !status)
-        throw new AppError('All fields must be filled');
+      if (!position || !CPF || !name || !UF || !salary || !status) return;
+
       employees.push({
         created_at: convertStringToDate(created_at),
         position,
@@ -54,8 +52,6 @@ class ImportEmployeeServive {
     });
 
     await new Promise(resolve => csv.on('end', resolve));
-
-    // await this.employeeRepository.save(employees);
 
     await Promise.all(
       employees.map(employee => this.employeeRepository.create(employee)),

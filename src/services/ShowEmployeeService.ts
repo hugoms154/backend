@@ -12,7 +12,7 @@ export default class ShowEmployeeService {
 
   async execute(): Promise<Employee[]> {
     const employee = await this.employeeRepository.findAll();
-    if (!employee) throw new AppError('Employee not found.', 404);
+    if (employee.length === 0) throw new AppError('Employee not found.', 404);
 
     return employee;
   }

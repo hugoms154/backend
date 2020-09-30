@@ -13,7 +13,7 @@ import {
   SearchEmployeeByCreationDateService,
   SearchEmployeeByNameService,
   SearchEmployeeByPositionService,
-  SearchEmployeeBySalaryService,
+  SearchEmployeeBySalaryRangeService,
   SearchEmployeeByStatusService,
   SearchEmployeeByUFService,
 } from '../services';
@@ -148,11 +148,11 @@ employeesRouter.get('/salary', async (request, response) => {
   const minToNumber = Number(min);
   const maxToNumber = Number(max);
 
-  const searchEmployeeBySalaryService = container.resolve(
-    SearchEmployeeBySalaryService,
+  const searchEmployeeBySalaryRangeService = container.resolve(
+    SearchEmployeeBySalaryRangeService,
   );
 
-  const employees = await searchEmployeeBySalaryService.execute({
+  const employees = await searchEmployeeBySalaryRangeService.execute({
     min: minToNumber,
     max: maxToNumber,
   });

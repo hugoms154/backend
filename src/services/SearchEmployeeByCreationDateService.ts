@@ -15,17 +15,17 @@ export default class SearchEmployeeByCPFService {
   ) {}
 
   async execute(date: string): Promise<Employee[]> {
+    if (!validateDate(date)) throw new AppError('Invalid Date format');
+
     const [formatedDate] = convertDateToDbDate(convertStringToDate(date)).split(
       ' ',
     );
-
-    if (!validateDate(date)) throw new AppError('Invalid Date format');
 
     const employee = await this.employeeRepository.findByCreatedAt(
       formatedDate,
     );
 
-    if (!employee) throw new AppError('Employees not found.', 404);
+    if (employee.length === 0) throw new AppError('Employees not found.', 404);
 
     return employee;
   }

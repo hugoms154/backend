@@ -4,23 +4,26 @@ import AppError from '../errors/AppError';
 import IEmployeeRepository from '../repositories/IEmployeeRepository';
 
 export interface IResquest {
-  min: number;
+  min?: number;
   max: number;
 }
 
 @injectable()
-export default class SearchEmployeeByCPFService {
+export default class SearchEmployeeBySalaryRangeService {
   constructor(
     @inject('EmployeeRepository')
     private employeeRepository: IEmployeeRepository,
   ) {}
 
-  async execute({ min, max }: IResquest): Promise<Employee[]> {
+  async execute({ min = 0, max }: IResquest): Promise<Employee[]> {
     if (!max) throw new AppError('Max value must be required.', 400);
+    if (min > max)
+      throw new AppError('Min value cannot be higher than Maximum', 400);
+    if (min < 0) throw new AppError('Min value cannot be negative');
 
     const employee = await this.employeeRepository.findBySalaryRange(min, max);
 
-    if (!employee) throw new AppError('Employee not found.', 404);
+    if (employee.length === 0) throw new AppError('Employee not found.', 404);
 
     return employee;
   }

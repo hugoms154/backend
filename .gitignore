@@ -7,4 +7,7 @@ temp/
 
 tmp/*
 !tmp/.gitkeep
+
 src/database/db.sqlite
+coverage/*
+

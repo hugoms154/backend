@@ -20,7 +20,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
   public async remove(CPF: string): Promise<Employee | Employee[]> {
     const result = await this.ormRepository
       .find({ where: { CPF } })
-      .then(async employee => await this.ormRepository.remove(employee));
+      .then(employee => this.ormRepository.remove(employee));
 
     return result;
   }
@@ -75,7 +75,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return findEmployee;
   }
 
-  public async findByName(name: string): Promise<Employee[] | undefined> {
+  public async findByName(name: string): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({
       where: `"Employee"."name" LIKE '%${name}%'`,
     });
@@ -83,9 +83,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return findEmployee;
   }
 
-  public async findByPosition(
-    position: string,
-  ): Promise<Employee[] | undefined> {
+  public async findByPosition(position: string): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({
       where: `"Employee"."position" LIKE '%${position}%'`,
     });
@@ -93,7 +91,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return findEmployee;
   }
 
-  public async findByStatus(status: string): Promise<Employee[] | undefined> {
+  public async findByStatus(status: string): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({
       where: { status },
     });
@@ -101,7 +99,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return findEmployee;
   }
 
-  public async findByUF(UF: string): Promise<Employee[] | undefined> {
+  public async findByUF(UF: string): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({ where: { UF } });
 
     return findEmployee;
@@ -110,7 +108,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
   public async findBySalaryRange(
     min: number,
     max: number,
-  ): Promise<Employee[] | undefined> {
+  ): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({
       where: { salary: Between(min, max) },
     });
@@ -118,7 +116,7 @@ export default class EmployeeRepository implements IEmployeeRepository {
     return findEmployee;
   }
 
-  public async findByCreatedAt(date: string): Promise<Employee[] | undefined> {
+  public async findByCreatedAt(date: string): Promise<Employee[]> {
     const findEmployee = await this.ormRepository.find({
       where: `"Employee_created_at" LIKE '${date}%'`,
     });

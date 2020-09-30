@@ -16,12 +16,43 @@ export default class SearchEmployeeByCPFService {
 
   async execute(UF: string): Promise<IResponse> {
     const upperUF = UF.toUpperCase();
+    const reg = [
+      'RO',
+      'AC',
+      'AM',
+      'RR',
+      'PA',
+      'AP',
+      'TO',
+      'MA',
+      'PI',
+      'CE',
+      'RN',
+      'PB',
+      'PE',
+      'AL',
+      'SE',
+      'BA',
+      'MG',
+      'ES',
+      'RJ',
+      'SP',
+      'PR',
+      'SC',
+      'RS',
+      'MS',
+      'MT',
+      'GO',
+      'DF',
+    ];
 
     if (!UF) throw new AppError('Value must be required.', 400);
+    if (!reg.includes(upperUF)) throw new AppError('Invalid Value to UF');
 
     const employees = await this.employeeRepository.findByUF(upperUF);
 
-    if (!employees) throw new AppError('No entries found to this value', 404);
+    if (employees.length === 0)
+      throw new AppError('No entries found to this value', 404);
 
     const total = employees.length;
 

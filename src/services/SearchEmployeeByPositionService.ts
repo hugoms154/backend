@@ -15,7 +15,7 @@ export default class SearchEmployeeByPositionService {
 
     const employee = await this.employeeRepository.findByPosition(position);
 
-    if (!employee) throw new AppError('Employees not found.', 404);
+    if (employee.length === 0) throw new AppError('Employees not found.', 404);
 
     return employee;
   }

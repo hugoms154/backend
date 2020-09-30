@@ -15,7 +15,7 @@ export default class SearchEmployeeByCPFService {
 
     const employee = await this.employeeRepository.findByName(name);
 
-    if (!employee) throw new AppError('Employee not found.', 404);
+    if (employee.length === 0) throw new AppError('Employee not found.', 404);
 
     return employee;
   }
