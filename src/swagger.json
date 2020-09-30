@@ -68,7 +68,7 @@
           "200":{
             "description":"OK",
             "schema":{
-              "$ref":"#/definitions/Employees"
+              "$ref":"#/definitions/Employee"
             }
           },
             "400":{
@@ -154,7 +154,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
@@ -186,7 +186,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
@@ -218,7 +218,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
@@ -250,7 +250,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
@@ -289,7 +289,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
@@ -321,7 +321,7 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employee"
+              "$ref": "#/definitions/Employees"
             }
           },
           "400":{
