@@ -5,5 +5,5 @@ export default interface IEmployeeDTO {
   UF: string;
   salary: number;
   status: string;
-  created_at?: string;
+  created_at?: Date;
 }

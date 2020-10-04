@@ -1,3 +1,4 @@
+import { isEqual, parseISO } from 'date-fns';
 import 'reflect-metadata';
 import Employee from '../../entities/Employee';
 import AppError from '../../errors/AppError';
@@ -10,7 +11,7 @@ interface IEmployeeDTO {
   position: string;
   salary: number;
   status: string;
-  created_at?: string;
+  created_at?: Date;
 }
 
 export default class FakeEmployeeRepository {
@@ -29,17 +30,15 @@ export default class FakeEmployeeRepository {
     salary,
     position,
     status,
-    created_at,
+    created_at = new Date(),
   }: IEmployeeDTO): Promise<Employee> {
     const employee = new Employee();
-    let newDate;
     let newId;
     if (!id)
       newId =
         this.employees.length === 0
           ? 1
           : this.employees[this.employees.length - 1].id + 1;
-    if (!created_at) newDate = new Date();
 
     Object.assign(employee, {
       id: newId,
@@ -49,7 +48,7 @@ export default class FakeEmployeeRepository {
       salary,
       position,
       status,
-      created_at: created_at || newDate,
+      created_at,
     });
 
     this.employees.push(employee);
@@ -80,12 +79,8 @@ export default class FakeEmployeeRepository {
 
   async findByCreatedAt(date: string): Promise<Employee[]> {
     const findEmployee = this.employees.filter(employee => {
-      const inputDate = new Date(date.substring(0, 10)).valueOf();
-      const employeeDate = new Date(
-        employee.created_at.toString().substring(0, 10),
-      ).valueOf();
-
-      return employeeDate === inputDate;
+      const parsedDate = parseISO(date);
+      return isEqual(parsedDate, employee.created_at);
     });
     return findEmployee;
   }

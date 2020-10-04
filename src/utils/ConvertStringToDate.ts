@@ -1,11 +1,11 @@
-const convertStringToDate = (date: string): string => {
+import { parseISO } from 'date-fns';
+
+const convertStringToDate = (date: string): Date => {
   const [day, month, year] = date.split('/');
 
-  const newDate = new Date(`${year}-${month}-${day}`).setHours(3);
+  const formattedDate = parseISO(`${year}-${month}-${day}`);
 
-  const dateToString = new Date(newDate).toLocaleString('en');
-
-  return dateToString;
+  return formattedDate;
 };
 
 export default convertStringToDate;

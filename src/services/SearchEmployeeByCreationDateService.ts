@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
+import { formatISO } from 'date-fns';
 import Employee from '../entities/Employee';
 import AppError from '../errors/AppError';
 
 import convertStringToDate from '../utils/ConvertStringToDate';
-import convertDateToDbDate from '../utils/ConvertDateToDbDate';
 import validateDate from '../utils/ValidateDate';
 import IEmployeeRepository from '../repositories/IEmployeeRepository';
 
@@ -16,13 +16,12 @@ export default class SearchEmployeeByCPFService {
 
   async execute(date: string): Promise<Employee[]> {
     if (!validateDate(date)) throw new AppError('Invalid Date format');
+    const stringToDate = convertStringToDate(date);
 
-    const [formatedDate] = convertDateToDbDate(convertStringToDate(date)).split(
-      ' ',
-    );
+    const formattedDate = formatISO(stringToDate, { representation: 'date' });
 
     const employee = await this.employeeRepository.findByCreatedAt(
-      formatedDate,
+      formattedDate,
     );
 
     if (employee.length === 0) throw new AppError('Employees not found.', 404);
