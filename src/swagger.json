@@ -49,10 +49,8 @@
         }
       },
       "post":{
-        "tags":[
-          "Employees"
-        ],
-        "summary":"Get all emplooyes in system",
+        "tags":["Employees"],
+        "summary":"Create new emplooye in system",
         "parameters": [
           {
             "in": "body",
@@ -77,6 +75,28 @@
         }
       }
     },
+    "/employees/import":{
+      "post":{
+        "tags": ["Employees"],
+        "summary": "Import employees from txt/csv file",
+        "parameters": [{
+          "in": "formData",
+          "required": true,
+          "name": "file",
+          "type": "file",
+          "description": "The file to upload"
+        }],
+        "responses": {
+          "200":{
+            "description": "OK",
+            "schema":{
+              "$ref": "#/definitions/Employees"
+            }
+          }
+        }
+      }
+    },
+
     "/employees/{cpf}":{
       "delete":{
         "parameters": [
@@ -218,8 +238,20 @@
           "200":{
             "description": "OK",
             "schema":{
-              "$ref": "#/definitions/Employees"
-            }
+              "type":"object",
+              "properties":{
+                "employees":{
+                  "type":"object",
+                    "additionalProperties":{
+                      "$ref":"#/definitions/Employee"
+                    }
+                },
+                "total": {
+                  "type": "number"
+                }
+              }
+              }
+
           },
           "400":{
             "description": "Value must be required"
@@ -370,9 +402,9 @@
       "properties":{
         "employees":{
           "type":"object",
-          "additionalProperties":{
-            "$ref":"#/definitions/Employee"
-          }
+            "additionalProperties":{
+              "$ref":"#/definitions/Employee"
+            }
         }
       }
     }
