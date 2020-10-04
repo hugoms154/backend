@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { CreateEmployeeService, SearchEmployeeByNameService } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('SearchEmployeeByName', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -18,7 +19,7 @@ describe('SearchEmployeeByName', () => {
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -28,7 +29,7 @@ describe('SearchEmployeeByName', () => {
       UF: 'RJ',
       salary: 2600,
       status: 'inativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
   });
 
@@ -54,7 +55,7 @@ describe('SearchEmployeeByName', () => {
         UF: 'SP',
         salary: 50000,
         status: 'ativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
       {
         id: 2,
@@ -64,7 +65,7 @@ describe('SearchEmployeeByName', () => {
         UF: 'RJ',
         salary: 2600,
         status: 'inativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });

@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { CreateEmployeeService, ShowEmployeeService } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('ShowEmployee', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -20,7 +21,7 @@ describe('ShowEmployee', () => {
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -30,7 +31,7 @@ describe('ShowEmployee', () => {
       UF: 'RJ',
       salary: 2600,
       status: 'inativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -40,7 +41,7 @@ describe('ShowEmployee', () => {
       UF: 'SP',
       salary: 2600,
       status: 'BLOQUEADO',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
   });
 
@@ -55,7 +56,7 @@ describe('ShowEmployee', () => {
           UF: 'SP',
           salary: 50000,
           status: 'ativo',
-          created_at: '10/02/2020',
+          created_at: convertStringToDate('10/02/2020'),
         },
         {
           id: 2,
@@ -65,7 +66,7 @@ describe('ShowEmployee', () => {
           UF: 'RJ',
           salary: 2600,
           status: 'inativo',
-          created_at: '10/02/2020',
+          created_at: convertStringToDate('10/02/2020'),
         },
         {
           id: 3,
@@ -75,7 +76,7 @@ describe('ShowEmployee', () => {
           UF: 'SP',
           salary: 2600,
           status: 'BLOQUEADO',
-          created_at: '10/02/2020',
+          created_at: convertStringToDate('10/02/2020'),
         },
       ]),
     );

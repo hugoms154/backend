@@ -5,6 +5,7 @@ import {
 } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('SearchEmployeeByCreationDate', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -17,12 +18,11 @@ describe('SearchEmployeeByCreationDate', () => {
     createEmployee.execute({
       name: 'Vinicius Daniel',
       CPF: '12345678900',
-      position: 'CEO',
+      position: 'Estagiario',
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-
-      created_at: '2020-10-25 00:00:00.000',
+      created_at: convertStringToDate('25/10/2020'),
     });
     createEmployee.execute({
       name: 'Thiago',
@@ -31,7 +31,7 @@ describe('SearchEmployeeByCreationDate', () => {
       UF: 'GO',
       salary: 5000000,
       status: 'ativo',
-      created_at: '2020-10-25 00:00:00.000',
+      created_at: convertStringToDate('25/10/2020'),
     });
 
     createEmployee.execute({
@@ -41,7 +41,7 @@ describe('SearchEmployeeByCreationDate', () => {
       UF: 'SP',
       salary: 5000,
       status: 'ativo',
-      created_at: '2020-12-25 00:00:00.000',
+      created_at: convertStringToDate('25/12/2020'),
     });
     createEmployee.execute({
       name: 'Hugo',
@@ -50,7 +50,7 @@ describe('SearchEmployeeByCreationDate', () => {
       UF: 'RJ',
       salary: 2640,
       status: 'ativo',
-      created_at: '2020-12-31 00:00:00.000',
+      created_at: convertStringToDate('31/12/2020'),
     });
   });
 
@@ -74,11 +74,11 @@ describe('SearchEmployeeByCreationDate', () => {
         id: 1,
         name: 'Vinicius Daniel',
         CPF: '12345678900',
-        position: 'CEO',
+        position: 'Estagiario',
         UF: 'SP',
         salary: 50000,
         status: 'ativo',
-        created_at: '2020-10-25 00:00:00.000',
+        created_at: convertStringToDate('25/10/2020'),
       },
       {
         id: 2,
@@ -88,7 +88,7 @@ describe('SearchEmployeeByCreationDate', () => {
         UF: 'GO',
         salary: 5000000,
         status: 'ativo',
-        created_at: '2020-10-25 00:00:00.000',
+        created_at: convertStringToDate('25/10/2020'),
       },
     ]);
   });

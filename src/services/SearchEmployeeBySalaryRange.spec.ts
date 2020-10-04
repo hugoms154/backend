@@ -5,6 +5,7 @@ import {
 } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('SearchEmployeeBySalaryRange', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -21,7 +22,7 @@ describe('SearchEmployeeBySalaryRange', () => {
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -31,7 +32,7 @@ describe('SearchEmployeeBySalaryRange', () => {
       UF: 'RJ',
       salary: 2600,
       status: 'inativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -41,7 +42,7 @@ describe('SearchEmployeeBySalaryRange', () => {
       UF: 'SP',
       salary: 6450,
       status: 'BLOQUEADO',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
   });
 
@@ -81,7 +82,7 @@ describe('SearchEmployeeBySalaryRange', () => {
         UF: 'RJ',
         salary: 2600,
         status: 'inativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });
@@ -98,54 +99,8 @@ describe('SearchEmployeeBySalaryRange', () => {
         UF: 'SP',
         salary: 6450,
         status: 'BLOQUEADO',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });
-
-  // it('should be able to find employees by UF', async () => {
-  //   expect(await searchEmployeeBySalaryRange.execute('SP')).toMatchObject({
-  //     employees: [
-  //       {
-  //         id: 1,
-  //         name: 'Anna Silva',
-  //         CPF: '12345678900',
-  //         position: 'Analista Sr',
-  //         UF: 'SP',
-  //         salary: 50000,
-  //         status: 'ativo',
-  //         created_at: '10/02/2020',
-  //       },
-  //       {
-  //         id: 3,
-  //         name: 'Vinicius Daniel',
-  //         CPF: '99911155524',
-  //         position: 'Dev Sr',
-  //         UF: 'SP',
-  //         salary: 2600,
-  //         status: 'BLOQUEADO',
-  //         created_at: '10/02/2020',
-  //       },
-  //     ],
-  //     total: 2,
-  //   });
-  // });
-
-  // it('should be able to find a employee by UF', async () => {
-  //   expect(await searchEmployeeBySalaryRange.execute('RJ')).toMatchObject({
-  //     employees: [
-  //       {
-  //         id: 2,
-  //         name: 'Annabel Paiva',
-  //         CPF: '12345678900',
-  //         position: 'Analista Jr',
-  //         UF: 'RJ',
-  //         salary: 2600,
-  //         status: 'inativo',
-  //         created_at: '10/02/2020',
-  //       },
-  //     ],
-  //     total: 1,
-  //   });
-  // });
 });

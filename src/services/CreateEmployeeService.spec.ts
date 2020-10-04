@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import CreateEmployeeService from './CreateEmployeeService';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
+import AppError from '../errors/AppError';
 
 describe('CreateEmployee', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -61,5 +62,17 @@ describe('CreateEmployee', () => {
     });
 
     expect(secondEmployee.salary).toBe(2920);
+  });
+
+  it('should not be able to create a employee without all values', async () => {
+    const employee = createEmployee.execute({
+      name: 'Daniel Vieira',
+      CPF: '00100200405',
+      position: 'Estagario',
+      UF: '',
+      salary: 750,
+      status: 'ativo',
+    });
+    await expect(employee).rejects.toBeInstanceOf(AppError);
   });
 });

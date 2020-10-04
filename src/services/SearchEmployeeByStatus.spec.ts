@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { CreateEmployeeService, SearchEmployeeByStatusService } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('SearchEmployeeByStatus', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -18,7 +19,7 @@ describe('SearchEmployeeByStatus', () => {
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -28,7 +29,7 @@ describe('SearchEmployeeByStatus', () => {
       UF: 'RJ',
       salary: 2600,
       status: 'inativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -38,7 +39,7 @@ describe('SearchEmployeeByStatus', () => {
       UF: 'SP',
       salary: 2600,
       status: 'BLOQUEADO',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
   });
 
@@ -64,7 +65,7 @@ describe('SearchEmployeeByStatus', () => {
         UF: 'SP',
         salary: 50000,
         status: 'ativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });
@@ -79,7 +80,7 @@ describe('SearchEmployeeByStatus', () => {
         UF: 'RJ',
         salary: 2600,
         status: 'inativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });
@@ -94,7 +95,7 @@ describe('SearchEmployeeByStatus', () => {
         UF: 'SP',
         salary: 2600,
         status: 'BLOQUEADO',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });

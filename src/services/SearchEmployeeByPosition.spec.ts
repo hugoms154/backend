@@ -5,6 +5,7 @@ import {
 } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('SearchEmployeeByPosition', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -21,7 +22,7 @@ describe('SearchEmployeeByPosition', () => {
       UF: 'SP',
       salary: 50000,
       status: 'ativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
 
     createEmployee.execute({
@@ -31,7 +32,7 @@ describe('SearchEmployeeByPosition', () => {
       UF: 'RJ',
       salary: 2600,
       status: 'inativo',
-      created_at: '10/02/2020',
+      created_at: convertStringToDate('10/02/2020'),
     });
   });
 
@@ -57,7 +58,7 @@ describe('SearchEmployeeByPosition', () => {
         UF: 'SP',
         salary: 50000,
         status: 'ativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
       {
         id: 2,
@@ -67,7 +68,7 @@ describe('SearchEmployeeByPosition', () => {
         UF: 'RJ',
         salary: 2600,
         status: 'inativo',
-        created_at: '10/02/2020',
+        created_at: convertStringToDate('10/02/2020'),
       },
     ]);
   });

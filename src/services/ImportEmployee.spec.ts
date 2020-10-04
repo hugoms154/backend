@@ -4,6 +4,7 @@ import fs from 'fs';
 import { ImportEmployeeService } from './index';
 import FakeEmployeeRepository from '../repositories/fakes/FakeEmployeeRepository';
 import AppError from '../errors/AppError';
+import convertStringToDate from '../utils/ConvertStringToDate';
 
 describe('ImportEmployee', () => {
   const fakeEmployeeRepository = new FakeEmployeeRepository();
@@ -35,7 +36,7 @@ describe('ImportEmployee', () => {
           {
             CPF: '59984408701',
             UF: 'RO',
-            created_at: '2017-04-19T00:00:00.000Z',
+            created_at: convertStringToDate('19/04/2017'),
             name: 'Aaron Aaby',
             position: 'AC Sr',
             salary: '5312.70',
@@ -58,7 +59,7 @@ describe('ImportEmployee', () => {
           {
             CPF: '85235708709',
             UF: 'AP',
-            created_at: '2017-04-15T00:00:00.000Z',
+            created_at: convertStringToDate('15/04/2017'),
             name: 'Aaron Aaberg',
             position: 'Dev Jr',
             salary: '8965.30',
@@ -67,7 +68,7 @@ describe('ImportEmployee', () => {
           {
             CPF: '59984408701',
             UF: 'RO',
-            created_at: '2017-04-19T00:00:00.000Z',
+            created_at: convertStringToDate('19/04/2017'),
             name: 'Aaron Aaby',
             position: 'AC Sr',
             salary: '5312.70',
@@ -76,7 +77,7 @@ describe('ImportEmployee', () => {
           {
             CPF: '51704568080',
             UF: 'RJ',
-            created_at: '2017-04-03T00:00:00.000Z',
+            created_at: convertStringToDate('03/04/2017'),
             name: 'Abbey Aadland',
             position: 'Analista Sr',
             salary: '5448.60',
