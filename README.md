@@ -6,8 +6,8 @@ Também estando disponível a partir da rota [/swagger](http://localhost:3333/sw
 ## Instalação
 Use o git [clone](https://git-scm.com/docs/git-clone) para clonar o repositório. Então instale as dependencias com yarn.
 ```bash
-git clone https://github.com/hugoms154/backend-allu.git
-cd backend-allu
+git clone https://github.com/hugoms154/backend-egestor.git
+cd backend-egestor
 
 yarn install
 ```
