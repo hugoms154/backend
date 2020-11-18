@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/hugoms154/backend-allu",
+  "repository": "https://github.com/hugoms154/backend-egestor",
   "author": "hugo miranda <hugo.miranda.souza@gmail.com>",
   "license": "MIT",
   "scripts": {
